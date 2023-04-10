@@ -7,5 +7,4 @@ export class UserInput {
 
   @Field()
   email: string;
-
 }

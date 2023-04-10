@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
+import {User} from "../../user/dto/user.entity";
 
 @Entity()
 export class Permission {
@@ -7,4 +8,7 @@ export class Permission {
 
   @Column()
   name: string;
+
+  @ManyToMany(() => User, user => user.permissions)
+  users: User[];
 }

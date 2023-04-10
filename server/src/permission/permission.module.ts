@@ -6,6 +6,7 @@ import {Permission} from "./dto/permission.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Permission])],
-  providers: [PermissionResolver, PermissionService]
+  providers: [PermissionResolver, PermissionService],
+  exports: [PermissionService]
 })
 export class PermissionModule {}

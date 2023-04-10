@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ManyToMany, JoinTable, PrimaryGeneratedColumn } from 'typeorm';
+import {Permission} from "../../permission/dto/permission.entity";
 
 @Entity()
 export class User {
@@ -10,4 +11,8 @@ export class User {
 
   @Column()
   email: string;
+
+  @ManyToMany(() => Permission, { cascade: true })
+  @JoinTable()
+  permissions: Permission[];
 }
