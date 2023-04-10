@@ -11,6 +11,11 @@ export class UserResolver {
     return this.userService.getOneById(id)
   }
 
+  @Query(() => [User])
+  async users() {
+    return this.userService.getMany();
+  }
+
   @Mutation(() => User)
   async createUser(@Args('username') username: string,  @Args('email') email: string) {
     const user = new User();

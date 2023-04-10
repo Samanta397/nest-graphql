@@ -21,6 +21,10 @@ export class UserService {
     return  await this.userRepository.findOneBy({id: id});
   }
 
+  async getMany(): Promise<User[]> {
+    return await this.userRepository.find();
+  }
+
   async create(user: UserInput): Promise<User> {
     const newUser = await this.userRepository.create(user);
     return this.userRepository.save(newUser);

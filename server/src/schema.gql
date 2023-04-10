@@ -22,6 +22,7 @@ type Query {
   role(id: Float!): Role!
   roles: [Role!]!
   user(id: Float!): User!
+  users: [User!]!
 }
 
 type Role {
