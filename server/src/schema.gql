@@ -3,8 +3,10 @@
 # ------------------------------------------------------
 
 type Mutation {
+  addPermissionsToRole(id: Float!, permissions: [Float!]!): Role!
   addPermissionsToUser(id: Float!, permissions: [Float!]!): User!
   createPermission(name: String!): Permission!
+  createRole(name: String!): Role!
   createUser(email: String!, username: String!): User!
 }
 
@@ -15,7 +17,14 @@ type Permission {
 
 type Query {
   permission(id: Float!): Permission!
+  role(id: Float!): Role!
   user(id: Float!): User!
+}
+
+type Role {
+  id: Int!
+  name: String!
+  permissions: [Permission!]
 }
 
 type User {
