@@ -18,6 +18,7 @@ type Permission {
 
 type Query {
   permission(id: Float!): Permission!
+  permissions: [Permission!]!
   role(id: Float!): Role!
   user(id: Float!): User!
 }

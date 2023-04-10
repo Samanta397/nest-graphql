@@ -15,6 +15,10 @@ export class PermissionService {
     return await this.permissionRepository.findOneBy({id: id})
   }
 
+  async getMany(): Promise<Permission[]> {
+    return await this.permissionRepository.find();
+  }
+
   async create(permission: PermissionInput): Promise<Permission> {
     const newPermission = await this.permissionRepository.create(permission);
     return this.permissionRepository.save(newPermission)

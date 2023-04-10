@@ -11,6 +11,11 @@ export class PermissionResolver {
     return this.permissionService.getOneById(id)
   }
 
+  @Query(() => [Permission])
+  async permissions() {
+   return this.permissionService.getMany()
+  }
+
   @Mutation(() => Permission)
   async createPermission(@Args('name') name: string) {
     const permission = new Permission();
