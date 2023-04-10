@@ -20,6 +20,7 @@ type Query {
   permission(id: Float!): Permission!
   permissions: [Permission!]!
   role(id: Float!): Role!
+  roles: [Role!]!
   user(id: Float!): User!
 }
 

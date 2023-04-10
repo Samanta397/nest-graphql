@@ -18,6 +18,10 @@ export class RoleService {
     return await this.roleRepository.findOneBy({id: id});
   }
 
+  async getMany(): Promise<Role[]> {
+    return await this.roleRepository.find();
+  }
+
   async create(role: RoleInput): Promise<Role> {
     const newRole = await this.roleRepository.create(role);
     return this.roleRepository.save(newRole)

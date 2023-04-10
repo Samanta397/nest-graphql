@@ -11,6 +11,11 @@ export class RoleResolver {
     return this.roleService.getOneById(id)
   }
 
+  @Query(() => [Role])
+  async roles() {
+    return this.roleService.getMany()
+  }
+
   @Mutation(() => Role)
   async createRole(@Args('name') name: string) {
     const role = new Role();
