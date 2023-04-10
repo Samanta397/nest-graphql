@@ -5,11 +5,14 @@ import { UserService } from './user.service';
 import { UserResolver } from './user.resolver';
 import {PermissionModule} from "../permission/permission.module";
 import {Permission} from "../permission/dto/permission.entity";
+import {RoleModule} from "../role/role.module";
+import {Role} from "../role/dto/role.entity";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Permission]),
-    PermissionModule
+    TypeOrmModule.forFeature([User, Permission, Role]),
+    PermissionModule,
+    RoleModule
   ],
   providers: [UserService, UserResolver],
 })

@@ -24,4 +24,9 @@ export class UserResolver {
   async addPermissionsToUser(@Args('id') id: number, @Args('permissions', { type: () => [Number] }) permissions: number[]) {
     return this.userService.addPermissionsToUser(id, permissions)
   }
+
+  @Mutation(() => User)
+  async addRolesToUser(@Args('id') id: number, @Args('roles', {type: () => [Number]}) roles: number[]) {
+    return this.userService.addRolesToUser(id, roles)
+  }
 }

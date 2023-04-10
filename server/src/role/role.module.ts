@@ -11,6 +11,7 @@ import {Permission} from "../permission/dto/permission.entity";
     TypeOrmModule.forFeature([Role, Permission]),
     PermissionModule
   ],
-  providers: [RoleResolver, RoleService]
+  providers: [RoleResolver, RoleService],
+  exports: [RoleService]
 })
 export class RoleModule {}

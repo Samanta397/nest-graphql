@@ -4,6 +4,7 @@ import {Repository, In} from 'typeorm';
 import {UserInput} from "./dto/user.input";
 import {User} from "./user.model";
 import {Permission} from "../permission/permission.model";
+import {Role} from "../role/role.model";
 
 @Injectable()
 export class UserService {
@@ -11,7 +12,9 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     @InjectRepository(Permission)
-    private readonly permissionRepository: Repository<Permission>
+    private readonly permissionRepository: Repository<Permission>,
+    @InjectRepository(Role)
+    private readonly roleRepository: Repository<Role>
   ) {}
 
   async getOneById(id: number): Promise<User> {
@@ -32,9 +35,14 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
+  async addRolesToUser(id: number, rolesIds: number[]): Promise<User> {
+    const user = await this.userRepository.findOne( {where: {id: id}, relations: ['roles'] });
+    const roles: Role[] = await this.roleRepository.findBy({
+      id: In(rolesIds)
+    })
 
-  // async update(id: number, updateObject: UserInput): Promise<User> {
-  //   const user = await this.userRepository.findOneBy({id: id})
-  //
-  // }
+    user.roles = [...roles];
+    return this.userRepository.save(user);
+  }
+
 }

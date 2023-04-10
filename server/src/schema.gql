@@ -5,6 +5,7 @@
 type Mutation {
   addPermissionsToRole(id: Float!, permissions: [Float!]!): Role!
   addPermissionsToUser(id: Float!, permissions: [Float!]!): User!
+  addRolesToUser(id: Float!, roles: [Float!]!): User!
   createPermission(name: String!): Permission!
   createRole(name: String!): Role!
   createUser(email: String!, username: String!): User!
@@ -31,5 +32,6 @@ type User {
   email: String!
   id: Int!
   permissions: [Permission!]
+  roles: [Role!]
   username: String!
 }
