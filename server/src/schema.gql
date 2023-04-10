@@ -3,10 +3,17 @@
 # ------------------------------------------------------
 
 type Mutation {
+  createPermission(name: String!): Permission!
   createUser(email: String!, username: String!): User!
 }
 
+type Permission {
+  id: Int!
+  name: String!
+}
+
 type Query {
+  permission(id: Float!): Permission!
   user(id: Float!): User!
 }
 
