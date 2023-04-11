@@ -6,11 +6,11 @@ input IDFilterComparison {
   eq: Float
   gt: Float
   gte: Float
-  is: Boolean
-  isNot: Boolean
   like: Float
+  lt: Float
+  lte: Float
+  neq: Float
   notLike: Float
-  req: Float
 }
 
 type Mutation {
@@ -59,8 +59,10 @@ input StringFilterComparison {
   is: Boolean
   isNot: Boolean
   like: String
+  lt: String
+  lte: String
+  neq: String
   notLike: String
-  req: String
 }
 
 type User {

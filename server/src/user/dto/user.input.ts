@@ -12,16 +12,10 @@ export class UserInput {
 @InputType()
 export class IDFilterComparison {
   @Field({ nullable: true })
-  is: boolean;
-
-  @Field({ nullable: true })
-  isNot: boolean;
-
-  @Field({ nullable: true })
   eq: number;
 
   @Field({ nullable: true })
-  req: number;
+  neq: number;
 
   @Field({ nullable: true })
   gt: number;
@@ -30,16 +24,22 @@ export class IDFilterComparison {
   gte: number;
 
   @Field({ nullable: true })
+  lt: number;
+
+  @Field({ nullable: true })
+  lte: number;
+
+  @Field({ nullable: true })
   like: number;
 
   @Field({ nullable: true })
   notLike: number;
 
   // @Field({ nullable: true })
-  // in: number[];
-
+  // inArr: number[];
+  //
   // @Field({ nullable: true })
-  // notIn: number[];
+  // notInArr: number[];
 }
 
 @InputType()
@@ -54,7 +54,7 @@ export class StringFilterComparison {
   eq: string;
 
   @Field({ nullable: true })
-  req: string;
+  neq: string;
 
   @Field({ nullable: true })
   gt: string;
@@ -63,16 +63,22 @@ export class StringFilterComparison {
   gte: string;
 
   @Field({ nullable: true })
+  lt: string;
+
+  @Field({ nullable: true })
+  lte: string;
+
+  @Field({ nullable: true })
   like: string;
 
   @Field({ nullable: true })
   notLike: string;
 
   // @Field({ nullable: true })
-  // in: number[];
-
+  // inArr: string[];
+  //
   // @Field({ nullable: true })
-  // notIn: number[];
+  // notInArr: string[];
 }
 
 @InputType()
@@ -98,7 +104,7 @@ export class UserFilterInput {
 }
 
 export enum UserSortField {
-  id= 'id',
+  id = 'id',
   username = 'username',
   email = 'email',
 }
