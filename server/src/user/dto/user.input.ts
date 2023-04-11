@@ -11,28 +11,28 @@ export class UserInput {
 
 @InputType()
 export class IDFilterComparison {
-  @Field({ nullable: true })
+  @Field(() => Int,{ nullable: true })
   eq: number;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   neq: number;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   gt: number;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   gte: number;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   lt: number;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   lte: number;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   like: number;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   notLike: number;
 
   // @Field({ nullable: true })
@@ -44,12 +44,6 @@ export class IDFilterComparison {
 
 @InputType()
 export class StringFilterComparison {
-  @Field({ nullable: true })
-  is: boolean;
-
-  @Field({ nullable: true })
-  isNot: boolean;
-
   @Field({ nullable: true })
   eq: string;
 

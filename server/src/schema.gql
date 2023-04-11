@@ -3,14 +3,14 @@
 # ------------------------------------------------------
 
 input IDFilterComparison {
-  eq: Float
-  gt: Float
-  gte: Float
-  like: Float
-  lt: Float
-  lte: Float
-  neq: Float
-  notLike: Float
+  eq: Int
+  gt: Int
+  gte: Int
+  like: Int
+  lt: Int
+  lte: Int
+  neq: Int
+  notLike: Int
 }
 
 type Mutation {
@@ -56,8 +56,6 @@ input StringFilterComparison {
   eq: String
   gt: String
   gte: String
-  is: Boolean
-  isNot: Boolean
   like: String
   lt: String
   lte: String
