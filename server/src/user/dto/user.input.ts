@@ -1,4 +1,4 @@
-import {Field, InputType, registerEnumType} from '@nestjs/graphql';
+import {Field, InputType, Int, registerEnumType} from '@nestjs/graphql';
 
 @InputType()
 export class UserInput {
@@ -123,4 +123,13 @@ export class UserSort {
 
   @Field(() => SortDirection, { nullable: true })
   direction: SortDirection
+}
+
+@InputType()
+export class OffsetPaging {
+  @Field(() => Int, { nullable: true })
+  limit?: number
+
+  @Field(() => Int, { nullable: true })
+  offset?: number
 }

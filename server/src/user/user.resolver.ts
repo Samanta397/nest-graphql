@@ -1,7 +1,7 @@
 import {Resolver, Args, Mutation, Query, Int} from '@nestjs/graphql';
 import { UserService } from './user.service';
 import {User} from "./user.model";
-import {UserFilterInput, UserSort} from "./dto/user.input";
+import {OffsetPaging, UserFilterInput, UserSort} from "./dto/user.input";
 
 @Resolver(() => User)
 export class UserResolver {
@@ -16,8 +16,9 @@ export class UserResolver {
   async users(
     @Args('filter', { nullable: true }) filter: UserFilterInput,
     @Args('sorting', {type: () => [UserSort],  nullable: true}) sorting: UserSort[],
+    @Args('paging', { nullable: true }) paging: OffsetPaging
   ) {
-    return this.userService.getMany(filter, sorting);
+    return this.userService.getMany(filter, sorting, paging);
   }
 
   @Mutation(() => User)

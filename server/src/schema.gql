@@ -22,6 +22,11 @@ type Mutation {
   createUser(email: String!, username: String!): User!
 }
 
+input OffsetPaging {
+  limit: Int
+  offset: Int
+}
+
 type Permission {
   id: Int!
   name: String!
@@ -33,7 +38,7 @@ type Query {
   role(id: [Int!]!): Role!
   roles: [Role!]!
   user(id: [Int!]!): User!
-  users(filter: UserFilterInput, sorting: [UserSort!]): [User!]!
+  users(filter: UserFilterInput, paging: OffsetPaging, sorting: [UserSort!]): [User!]!
 }
 
 type Role {

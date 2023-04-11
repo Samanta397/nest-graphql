@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository, In} from 'typeorm';
-import {UserFilterInput, UserInput} from "./dto/user.input";
+import {OffsetPaging, UserFilterInput, UserInput} from "./dto/user.input";
 import {User} from "./user.model";
 import {Permission} from "../permission/permission.model";
 import {Role} from "../role/role.model";
@@ -23,7 +23,7 @@ export class UserService {
     return  await this.userRepository.findOneBy({id: id});
   }
 
-  async getMany(filter, sorting): Promise<User[]> {
+  async getMany(filter, sorting, paging: OffsetPaging = {limit: 10}): Promise<User[]> {
     const queryBuilder = this.userRepository.createQueryBuilder('user');
 
     if (sorting) {
@@ -32,6 +32,10 @@ export class UserService {
       }, {});
 
       queryBuilder.orderBy(sortCondition)
+    }
+
+    if (paging) {
+      queryBuilder.limit(paging.limit).offset(paging.offset)
     }
 
 
