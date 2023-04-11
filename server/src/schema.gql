@@ -2,6 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input IDFilterComparison {
+  eq: Float
+  gt: Float
+  gte: Float
+  is: Boolean
+  isNot: Boolean
+  like: Float
+  notLike: Float
+  req: Float
+}
+
 type Mutation {
   addPermissionsToRole(id: [Int!]!, permissions: [Int!]!): Role!
   addPermissionsToUser(id: [Int!]!, permissions: [Int!]!): User!
@@ -22,7 +33,7 @@ type Query {
   role(id: [Int!]!): Role!
   roles: [Role!]!
   user(id: [Int!]!): User!
-  users: [User!]!
+  users(filter: UserFilterInput, sorting: [UserSort!]): [User!]!
 }
 
 type Role {
@@ -31,10 +42,45 @@ type Role {
   permissions: [Permission!]
 }
 
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input StringFilterComparison {
+  eq: String
+  gt: String
+  gte: String
+  is: Boolean
+  isNot: Boolean
+  like: String
+  notLike: String
+  req: String
+}
+
 type User {
   email: String!
   id: Int!
   permissions: [Permission!]
   roles: [Role!]
   username: String!
+}
+
+input UserFilterInput {
+  and: [UserFilterInput!]
+  email: StringFilterComparison
+  id: IDFilterComparison
+  or: [UserFilterInput!]
+  username: StringFilterComparison
+}
+
+input UserSort {
+  direction: SortDirection
+  field: UserSortField
+}
+
+enum UserSortField {
+  email
+  id
+  username
 }

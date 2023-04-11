@@ -1,10 +1,12 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository, In} from 'typeorm';
-import {UserInput} from "./dto/user.input";
+import {UserFilterInput, UserInput} from "./dto/user.input";
 import {User} from "./user.model";
 import {Permission} from "../permission/permission.model";
 import {Role} from "../role/role.model";
+import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
+
 
 @Injectable()
 export class UserService {
@@ -21,8 +23,19 @@ export class UserService {
     return  await this.userRepository.findOneBy({id: id});
   }
 
-  async getMany(): Promise<User[]> {
-    return await this.userRepository.find();
+  async getMany(filter, sorting): Promise<User[]> {
+    const queryBuilder = this.userRepository.createQueryBuilder('user');
+
+    if (sorting) {
+      const sortCondition = sorting.reduce((acc, item) => {
+        return {...acc, ...{[item.field]: item.direction}}
+      }, {});
+
+      queryBuilder.orderBy(sortCondition)
+    }
+
+
+    return queryBuilder.getMany();
   }
 
   async create(user: UserInput): Promise<User> {
@@ -48,5 +61,6 @@ export class UserService {
     user.roles = [...roles];
     return this.userRepository.save(user);
   }
+
 
 }
