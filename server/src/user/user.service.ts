@@ -147,19 +147,19 @@ export class UserService {
 
     switch (operator) {
       case 'eq':
-        return ({condition: `user.${fieldName} = :${fieldName}`, variables: {[fieldName]: value}})
+        return ({condition: `${fieldName} = :${fieldName}`, variables: {[fieldName]: value}})
       case 'gt':
-        return ({condition: `user.${fieldName} > :${fieldName}`, variables: {[fieldName]: value}})
+        return ({condition: `${fieldName} > :${fieldName}`, variables: {[fieldName]: value}})
       case 'gte':
-        return ({condition: `user.${fieldName} >= :${fieldName}`, variables: {[fieldName]: value}})
+        return ({condition: `${fieldName} >= :${fieldName}`, variables: {[fieldName]: value}})
       case 'lt':
-        return ({condition: `user.${fieldName} < :${fieldName}`, variables: {[fieldName]: value}})
+        return ({condition: `${fieldName} < :${fieldName}`, variables: {[fieldName]: value}})
       case 'lte':
-        return ({condition: `user.${fieldName} <= :${fieldName}`, variables: {[fieldName]: value}})
+        return ({condition: `${fieldName} <= :${fieldName}`, variables: {[fieldName]: value}})
       case 'like':
-        return ({condition: `user.${fieldName} LIKE :${fieldName}`, variables: {[fieldName]: value}})
+        return ({condition: `${fieldName} LIKE :${fieldName}`, variables: {[fieldName]: value}})
       case 'neq':
-        return ({condition: `user.${fieldName} NOT LIKE :${fieldName}`, variables: {[fieldName]: value}})
+        return ({condition: `${fieldName} NOT LIKE :${fieldName}`, variables: {[fieldName]: value}})
     }
   }
 }
