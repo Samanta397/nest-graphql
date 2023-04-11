@@ -1,4 +1,4 @@
-import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
+import {Args, Int, Mutation, Query, Resolver} from '@nestjs/graphql';
 import {Role} from "./role.model";
 import {RoleService} from "./role.service";
 
@@ -7,7 +7,7 @@ export class RoleResolver {
   constructor(private readonly roleService: RoleService) {}
 
   @Query(() => Role)
-  async role(@Args('id') id: number) {
+  async role(@Args('id', { type: () => [Int] }) id: number) {
     return this.roleService.getOneById(id)
   }
 
@@ -25,7 +25,10 @@ export class RoleResolver {
   }
 
   @Mutation(() => Role)
-  async addPermissionsToRole(@Args('id') id: number, @Args('permissions', { type: () => [Number] }) permissions: number[]) {
-    return this.roleService.addPermissionsToRole(id, permissions)
+  async addPermissionsToRole(
+    @Args('id', { type: () => [Int] }) id: number,
+    @Args('permissions', { type: () => [Int] }) permissionIds: number[]
+  ) {
+    return this.roleService.addPermissionsToRole(id, permissionIds)
   }
 }

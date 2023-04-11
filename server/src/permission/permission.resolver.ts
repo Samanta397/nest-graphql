@@ -1,4 +1,4 @@
-import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
+import {Args, Int, Mutation, Query, Resolver} from '@nestjs/graphql';
 import {PermissionService} from "./permission.service";
 import {Permission} from "./permission.model";
 
@@ -7,7 +7,7 @@ export class PermissionResolver {
   constructor(private readonly permissionService: PermissionService) {}
 
   @Query(() => Permission)
-  async permission(@Args('id') id: number) {
+  async permission(@Args('id', { type: () => [Int] }) id: number) {
     return this.permissionService.getOneById(id)
   }
 
