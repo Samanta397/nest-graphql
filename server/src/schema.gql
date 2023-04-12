@@ -15,11 +15,16 @@ input IDFilterComparison {
 
 type Mutation {
   addPermissionsToRole(id: [Int!]!, permissions: [Int!]!): Role!
-  addPermissionsToUser(id: [Int!]!, permissions: [Int!]!): User!
-  addRolesToUser(id: [Int!]!, roles: [Int!]!): User!
+  addPermissionsToUser(id: Int!, permissionsIds: [Int!]!): User!
+  addRolesToUser(id: Int!, rolesIds: [Int!]!): User!
   createPermission(name: String!): Permission!
   createRole(name: String!): Role!
   createUser(email: String!, username: String!): User!
+}
+
+type OffsetPageInfo {
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
 }
 
 input OffsetPaging {
@@ -38,7 +43,7 @@ type Query {
   role(id: [Int!]!): Role!
   roles: [Role!]!
   user(id: [Int!]!): User!
-  users(filter: UserFilterInput, paging: OffsetPaging, sorting: [UserSort!]): [User!]!
+  users(filter: UserFilterInput, paging: OffsetPaging, sorting: [UserSort!]): UserConnection!
 }
 
 type Role {
@@ -71,12 +76,25 @@ type User {
   username: String!
 }
 
+type UserConnection {
+  nodes: [User!]!
+  pageInfo: OffsetPageInfo!
+}
+
 input UserFilterInput {
   and: [UserFilterInput!]
   email: StringFilterComparison
   id: IDFilterComparison
   or: [UserFilterInput!]
+  permissions: UserFilterPermissionsInput
   username: StringFilterComparison
+}
+
+input UserFilterPermissionsInput {
+  and: [UserFilterPermissionsInput!]
+  id: IDFilterComparison
+  name: StringFilterComparison
+  or: [UserFilterPermissionsInput!]
 }
 
 input UserSort {

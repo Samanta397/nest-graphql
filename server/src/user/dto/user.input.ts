@@ -1,4 +1,5 @@
-import {Field, InputType, Int, registerEnumType} from '@nestjs/graphql';
+import {Field, InputType, Int, ObjectType, registerEnumType} from '@nestjs/graphql';
+import {User} from "../user.model";
 
 @InputType()
 export class UserInput {
@@ -76,6 +77,37 @@ export class StringFilterComparison {
 }
 
 @InputType()
+export class UserFilterRolesInput {
+  @Field(() => [UserFilterRolesInput], { nullable: true })
+  and?: UserFilterRolesInput[];
+
+  @Field(() => [UserFilterRolesInput], { nullable: true })
+  or?: UserFilterRolesInput[];
+
+  @Field(() => IDFilterComparison, { nullable: true })
+  id?: IDFilterComparison;
+
+  @Field(() => StringFilterComparison, { nullable: true })
+  name?: StringFilterComparison;
+}
+
+@InputType()
+export class UserFilterPermissionsInput {
+  @Field(() => [UserFilterPermissionsInput], { nullable: true })
+  and?: UserFilterPermissionsInput[];
+
+  @Field(() => [UserFilterPermissionsInput], { nullable: true })
+  or?: UserFilterPermissionsInput[];
+
+  @Field(() => IDFilterComparison, { nullable: true })
+  id?: IDFilterComparison;
+
+  @Field(() => StringFilterComparison, { nullable: true })
+  name?: StringFilterComparison;
+}
+
+
+@InputType()
 export class UserFilterInput {
   @Field(() => IDFilterComparison, { nullable: true })
   id?: IDFilterComparison;
@@ -92,9 +124,8 @@ export class UserFilterInput {
   @Field(() => [UserFilterInput], { nullable: true })
   or?: UserFilterInput[];
 
-  // roles
-
-  // permissions
+  @Field(() => UserFilterPermissionsInput, { nullable: true })
+  permissions?: UserFilterPermissionsInput;
 }
 
 export enum UserSortField {
@@ -132,4 +163,22 @@ export class OffsetPaging {
 
   @Field(() => Int, { nullable: true })
   offset?: number
+}
+
+@ObjectType()
+export class OffsetPageInfo {
+  @Field({ nullable: true })
+  hasNextPage?: boolean;
+
+  @Field({ nullable: true })
+  hasPreviousPage?: boolean;
+}
+
+@ObjectType()
+export class UserConnection {
+  @Field(() => OffsetPageInfo )
+  pageInfo: OffsetPageInfo
+
+  @Field(() => [User])
+  nodes: User[];
 }
