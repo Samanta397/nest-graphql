@@ -6,6 +6,9 @@ import { UserModule } from './user/user.module';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
+import { FilterModule } from './filter/filter.module';
+import { SortingModule } from './sorting/sorting.module';
+import { PagingModule } from './paging/paging.module';
 
 @Module({
   imports: [
@@ -27,6 +30,9 @@ import { PermissionModule } from './permission/permission.module';
     UserModule,
     RoleModule,
     PermissionModule,
+    FilterModule,
+    SortingModule,
+    PagingModule,
   ],
   controllers: [],
   providers: [],

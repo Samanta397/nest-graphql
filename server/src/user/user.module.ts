@@ -7,12 +7,14 @@ import {PermissionModule} from "../permission/permission.module";
 import {Permission} from "../permission/dto/permission.entity";
 import {RoleModule} from "../role/role.module";
 import {Role} from "../role/dto/role.entity";
+import {FilterModule} from "../filter/filter.module";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Permission, Role]),
     PermissionModule,
-    RoleModule
+    RoleModule,
+    FilterModule
   ],
   providers: [UserService, UserResolver],
 })

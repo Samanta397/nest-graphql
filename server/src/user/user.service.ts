@@ -1,14 +1,16 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository, In, Brackets} from 'typeorm';
-import {OffsetPaging, UserConnection, UserInput} from "./dto/user.input";
+import {UserInputDto} from "./dto/user-input.dto";
 import {User} from "./user.model";
 import {Permission} from "../permission/permission.model";
 import {Role} from "../role/role.model";
-
+import {FilterService} from "../filter/filter.service";
+import {UserConnection} from "./dto/user-connection.dto";
+import {OffsetPaging} from "../paging/types/offset-paging.dto";
 
 @Injectable()
-export class UserService {
+export class UserService extends FilterService{
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
@@ -16,7 +18,9 @@ export class UserService {
     private readonly permissionRepository: Repository<Permission>,
     @InjectRepository(Role)
     private readonly roleRepository: Repository<Role>
-  ) {}
+  ) {
+    super();
+  }
 
   async getOneById(id: number): Promise<User> {
     return  await this.userRepository.findOneBy({id: id});
@@ -30,7 +34,7 @@ export class UserService {
     let nodes = [];
 
     if (filter) {
-      const { and, or, id, username, email, roles } = filter;
+      const { and, or, id, username, email } = filter;
 
       if (id) {
         const {condition, variables} = this.buildFilter(id, 'user.id', 'id')
@@ -80,7 +84,7 @@ export class UserService {
     return {pageInfo: { hasNextPage, hasPreviousPage} , nodes: nodes};
   }
 
-  async create(user: UserInput): Promise<User> {
+  async create(user: UserInputDto): Promise<User> {
     const newUser = await this.userRepository.create(user);
     return this.userRepository.save(newUser);
   }
@@ -143,7 +147,7 @@ export class UserService {
 
         if (roles.and) {
           return new Brackets(qb => {
-            and.forEach(filter => {
+            roles.and.forEach(filter => {
               qb.andWhere(this.buildWhere(filter));
             });
           });
@@ -151,13 +155,13 @@ export class UserService {
 
       if (roles.or) {
         return new Brackets(qb => {
-          or.forEach(filter => {
+          roles.or.forEach(filter => {
             qb.orWhere(this.buildWhere(filter));
           });
         });
       }
     }
-///////////////////////////////////////////////////////////////
+
     if (permissions) {
       if (permissions.id) {
         const {condition, variables} = this.buildFilter(permissions.id, 'permission.id', 'permissionId')
@@ -177,7 +181,7 @@ export class UserService {
 
       if (permissions.and) {
         return new Brackets(qb => {
-          and.forEach(filter => {
+          permissions.and.forEach(filter => {
             qb.andWhere(this.buildWhere(filter));
           });
         });
@@ -185,7 +189,7 @@ export class UserService {
 
       if (permissions.or) {
         return new Brackets(qb => {
-          or.forEach(filter => {
+          permissions.or.forEach(filter => {
             qb.orWhere(this.buildWhere(filter));
           });
         });
@@ -221,24 +225,4 @@ export class UserService {
     }
   }
 
-  private buildFilter(filter, fieldName, variableName) {
-    const [operator, value] = Object.entries(filter)[0];
-
-    switch (operator) {
-      case 'eq':
-        return ({condition: `${fieldName} = :${variableName}`, variables: {[variableName]: value}})
-      case 'gt':
-        return ({condition: `${fieldName} > :${variableName}`, variables: {[variableName]: value}})
-      case 'gte':
-        return ({condition: `${fieldName} >= :${variableName}`, variables: {[variableName]: value}})
-      case 'lt':
-        return ({condition: `${fieldName} < :${variableName}`, variables: {[variableName]: value}})
-      case 'lte':
-        return ({condition: `${fieldName} <= :${variableName}`, variables: {[variableName]: value}})
-      case 'like':
-        return ({condition: `${fieldName} LIKE :${variableName}`, variables: {[variableName]: value}})
-      case 'neq':
-        return ({condition: `${fieldName} NOT LIKE :${variableName}`, variables: {[variableName]: value}})
-    }
-  }
 }

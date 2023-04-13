@@ -87,6 +87,7 @@ input UserFilterInput {
   id: IDFilterComparison
   or: [UserFilterInput!]
   permissions: UserFilterPermissionsInput
+  roles: UserFilterRolesInput
   username: StringFilterComparison
 }
 
@@ -95,6 +96,13 @@ input UserFilterPermissionsInput {
   id: IDFilterComparison
   name: StringFilterComparison
   or: [UserFilterPermissionsInput!]
+}
+
+input UserFilterRolesInput {
+  and: [UserFilterRolesInput!]
+  id: IDFilterComparison
+  name: StringFilterComparison
+  or: [UserFilterRolesInput!]
 }
 
 input UserSort {
